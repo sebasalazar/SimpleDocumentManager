@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:http="http://cxf.apache.org/transports/http/configuration"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                           http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+                           http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+                           http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+                           http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    
+    <bean id="eeWSPlaceholderConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="systemPropertiesMode" value="2" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:sdm-ws.properties</value>
+                <value>file:${user.home}${file.separator}.sdm-ws${file.separator}sdm.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <context:annotation-config />
+    <context:component-scan base-package="cl.sebastian.sdm.ws" />
+    
+    <context:annotation-config />
+    <jpa:repositories base-package="cl.sebastian.sdm.ws.repository" />
+    
+    <task:executor id="myexecutor" pool-size="7"  />
+    <task:annotation-driven executor="myexecutor"/>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory" />
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:jpaVendorAdapter-ref="jpaAdapter">
+        <property name="persistenceUnitName" value="sdmPU" />
+        <property name="persistenceXmlLocation" value="classpath*:META-INF/sdm-pu.xml" />
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.format_sql">${jpa.format.sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="jpaAdapter"
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+          p:showSql="${jpa.show.sql}"
+          p:generateDdl="${jpa.generate.ddl}"
+          p:database="${jpa.database.name}" />
+
+    <!-- configuracion DataSource -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username"  value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+    
+    <!-- WebService -->
+    <jaxws:server id="wsType" serviceClass="cl.sebastian.sdm.ws.api.WSType" address="/WSType">
+        <jaxws:serviceBean>
+            <bean class="cl.sebastian.sdm.ws.api.impl.WSTypeImpl" />
+        </jaxws:serviceBean>
+    </jaxws:server>
+    
+    <jaxws:server id="wsFile" serviceClass="cl.sebastian.sdm.ws.api.WSFile" address="/WSFile">
+        <jaxws:serviceBean>
+            <bean class="cl.sebastian.sdm.ws.api.impl.WSFileImpl" />
+        </jaxws:serviceBean>
+    </jaxws:server>
+
+    <!-- CXF Log -->
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus> 
+</beans>
