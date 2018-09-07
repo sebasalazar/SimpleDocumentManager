@@ -1,6 +1,6 @@
 package cl.sebastian.sdm.ws.service;
 
-import cl.sebastian.sdm.ws.model.Type;
+import cl.sebastian.sdm.ws.vo.ResponseVO;
 
 public interface TypeService {
 
@@ -10,7 +10,7 @@ public interface TypeService {
      * @param description
      * @return
      */
-    public Type create(final String name, final String description);
+    public ResponseVO create(final String name, final String description);
 
     /**
      *

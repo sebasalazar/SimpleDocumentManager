@@ -4,6 +4,7 @@ import cl.sebastian.sdm.ws.manager.DocumentManager;
 import cl.sebastian.sdm.ws.model.Document;
 import cl.sebastian.sdm.ws.service.DocumentService;
 import cl.sebastian.sdm.ws.vo.DocumentVO;
+import cl.sebastian.sdm.ws.vo.ResponseVO;
 import cl.sebastian.sdm.ws.vo.TypeVO;
 import java.io.Serializable;
 import javax.annotation.Resource;
@@ -24,20 +25,46 @@ public class DocumentServiceImpl implements DocumentService, Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentServiceImpl.class);
 
     @Override
-    public DocumentVO save(final String type, final String name, final String base64data) {
-        DocumentVO vo = null;
+    public ResponseVO save(final String type, final String name, final String base64data) {
+        ResponseVO vo = null;
         try {
             if (StringUtils.isNotBlank(base64data)) {
                 Document doc = documentManager.create(type, name, base64data);
+                vo = new ResponseVO();
+                if (doc != null) {
+                    vo.setCode(doc.getCode());
+                    vo.setOk(true);
+                    vo.setDescription("Success");
+                } else {
+                    vo.setCode("ERROR");
+                    vo.setOk(false);
+                    vo.setDescription("Failed");
+                }
+            }
+        } catch (Exception e) {
+            vo = new ResponseVO(false, "ERROR", String.format("An error has happend: %s", e.toString()));
+            LOGGER.error("Error al guardar: {}", e.toString());
+            LOGGER.debug("Error al guardar: {}", e.toString(), e);
+        }
+        return vo;
+    }
+
+    @Override
+    public DocumentVO getDocument(final String code) {
+        DocumentVO vo = null;
+        try {
+            if (StringUtils.isNotBlank(code)) {
+                Document doc = documentManager.getDocument(code);
                 if (doc != null) {
                     TypeVO tvo = new TypeVO();
                     tvo.setName(doc.getType().getName());
                     tvo.setDescription(doc.getType().getDescription());
-                    
+
                     String data = String.format("data:%s;base64,%s", doc.getMime(), Base64.encodeBase64String(doc.getFile()));
                     vo = new DocumentVO();
+                    vo.setCode(doc.getCode());
                     vo.setData(data);
-                    vo.setName(name);
+                    vo.setName(doc.getName());
                     vo.setType(tvo);
                 }
             }
@@ -48,4 +75,5 @@ public class DocumentServiceImpl implements DocumentService, Serializable {
         }
         return vo;
     }
+
 }

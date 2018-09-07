@@ -14,6 +14,13 @@ public interface DocumentManager {
      * @return El objeto del documento
      */
     public Document getDocument(final Long id);
+    
+    /**
+     * 
+     * @param code Código del documento
+     * @return El documento
+     */
+    public Document getDocument(final String code);
 
     /**
      *

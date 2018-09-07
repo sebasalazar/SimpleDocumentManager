@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DocumentVO extends BaseBean {
 
     private TypeVO type = null;
+    private String code = null;
     private String name = null;
     private String data = null;
 
@@ -16,6 +17,14 @@ public class DocumentVO extends BaseBean {
 
     public void setType(TypeVO type) {
         this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

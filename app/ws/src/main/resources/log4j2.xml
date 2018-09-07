@@ -7,8 +7,8 @@
     <Appenders>
         <!-- Archivo principal -->
         <RollingFile name="ROOT_REST_EE" 
-                     fileName="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}escritorioempresa.log" 
-                     filePattern="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}trustsigner.log.%d{yyyyMMdd}.gz" 
+                     fileName="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}escritorioempresa.log" 
+                     filePattern="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}sdm.log.%d{yyyyMMdd}.gz" 
                      append="true">
             <ThresholdFilter level="DEBUG" />
             <PatternLayout pattern="%d{dd/MM/yyyy}; %d{HH:mm:ss}; %p; (%t) %m%n"/>
@@ -20,8 +20,8 @@
 
         <!-- DEBUG -->
         <RollingFile name="DEBUG_REST_EE" 
-                     fileName="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}debug.log" 
-                     filePattern="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}debug.log.%d{yyyyMMdd}.gz" 
+                     fileName="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}debug.log" 
+                     filePattern="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}debug.log.%d{yyyyMMdd}.gz" 
                      append="true">
             <ThresholdFilter level="DEBUG" />
             <PatternLayout pattern="%d{dd/MM/yyyy}; %d{HH:mm:ss}; %p; {%C->%M} %m%n" />
@@ -33,8 +33,8 @@
         
         <!-- ERROR -->
         <RollingFile name="ERROR_REST_EE" 
-                     fileName="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}error.log" 
-                     filePattern="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}error.log.%d{yyyyMMdd}.gz" 
+                     fileName="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}error.log" 
+                     filePattern="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}error.log.%d{yyyyMMdd}.gz" 
                      append="true">
             <ThresholdFilter level="ERROR" />
             <PatternLayout pattern="[%d{dd/MM/yyyy HH:mm:ss,SSS}] {%C->%M} %m%n" />
@@ -46,8 +46,8 @@
 
         <!-- INFO -->
         <RollingFile name="INFO_REST_EE" 
-                     fileName="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}info.log" 
-                     filePattern="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}info.log.%d{yyyyMMdd}.gz" 
+                     fileName="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}info.log" 
+                     filePattern="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}info.log.%d{yyyyMMdd}.gz" 
                      append="true">
             <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="%d{dd/MM/yyyy}; %d{HH:mm:ss}; %p; %m%n" />
@@ -59,8 +59,8 @@
         
         <!-- CXF -->
         <RollingFile name="CXF_REST_EE" 
-                     fileName="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}cxf.log" 
-                     filePattern="${sys:path.logs}${sys:file.separator}trustsigner${sys:file.separator}integracion${sys:file.separator}escritorioempresa${sys:file.separator}cxf.log.%d{yyyyMMdd}.gz" 
+                     fileName="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}cxf.log" 
+                     filePattern="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}cxf.log.%d{yyyyMMdd}.gz" 
                      append="true">
             <PatternLayout pattern="%d{dd/MM/yyyy}; %d{HH:mm:ss}; %p; %m%n"/>
             <Policies>
@@ -70,7 +70,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="cl.trustsigner" additivity="false">
+        <Logger name="cl.sdm" additivity="false">
             <AppenderRef ref="INFO_REST_EE" level="info" />
             <AppenderRef ref="ERROR_REST_EE" level="error" />
             <AppenderRef ref="DEBUG_REST_EE" level="debug" />

@@ -40,6 +40,15 @@ public class DocumentManagerImpl implements DocumentManager, Serializable {
     }
 
     @Override
+    public Document getDocument(final String code) {
+        Document doc = null;
+        if (StringUtils.isNotBlank(code)) {
+            doc = documentRepository.findByCode(code);
+        }
+        return doc;
+    }
+
+    @Override
     public List<Document> getDocuments() {
         List<Document> docs = documentRepository.findAll();
         if (docs == null) {

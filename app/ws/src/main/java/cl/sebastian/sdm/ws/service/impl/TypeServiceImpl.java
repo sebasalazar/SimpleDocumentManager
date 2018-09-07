@@ -3,7 +3,9 @@ package cl.sebastian.sdm.ws.service.impl;
 import cl.sebastian.sdm.ws.manager.TypeManager;
 import cl.sebastian.sdm.ws.model.Type;
 import cl.sebastian.sdm.ws.service.TypeService;
+import cl.sebastian.sdm.ws.vo.ResponseVO;
 import java.io.Serializable;
+import java.util.UUID;
 import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,18 +22,28 @@ public class TypeServiceImpl implements TypeService, Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(TypeServiceImpl.class);
 
     @Override
-    public Type create(final String name, final String description) {
-        Type type = null;
+    public ResponseVO create(final String name, final String description) {
+        ResponseVO vo = null;
         try {
             if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(description)) {
-                type = typeManager.create(name, description);
+                Type type = typeManager.create(name, description);
+                vo = new ResponseVO();
+                if (type != null) {
+                    vo.setCode(UUID.randomUUID().toString());
+                    vo.setDescription("Success");
+                    vo.setOk(true);
+                } else {
+                    vo.setCode("Error");
+                    vo.setDescription("Failed");
+                    vo.setOk(false);
+                }
             }
         } catch (Exception e) {
-            type = null;
+            vo = new ResponseVO(false, "Error", String.format("An error has happend: %s", e.toString()));
             LOGGER.error("Error al crear tipo: {}", e.toString());
             LOGGER.debug("Error al crear tipo: {}", e.toString(), e);
         }
-        return type;
+        return vo;
     }
 
     @Override

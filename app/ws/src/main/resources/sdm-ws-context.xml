@@ -5,14 +5,20 @@
        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
        xmlns:http="http://cxf.apache.org/transports/http/configuration"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:cxf="http://cxf.apache.org/core"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
                            http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
                            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
                            http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
                            http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
-                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+                           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     
@@ -81,9 +87,9 @@
         </jaxws:serviceBean>
     </jaxws:server>
     
-    <jaxws:server id="wsFile" serviceClass="cl.sebastian.sdm.ws.api.WSFile" address="/WSFile">
+    <jaxws:server id="wsFile" serviceClass="cl.sebastian.sdm.ws.api.WSDoc" address="/WSDoc">
         <jaxws:serviceBean>
-            <bean class="cl.sebastian.sdm.ws.api.impl.WSFileImpl" />
+            <bean class="cl.sebastian.sdm.ws.api.impl.WSDocImpl" />
         </jaxws:serviceBean>
     </jaxws:server>
 

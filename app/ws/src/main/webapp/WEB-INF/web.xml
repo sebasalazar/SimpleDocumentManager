@@ -4,11 +4,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-    <description>Servicio WS Escritorio Empresa</description>
+    <description>Servicio WS Ejemplo</description>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:ee-model-context.xml, classpath:ee-ws-context.xml</param-value>
+        <param-value>classpath:sdm-ws-context.xml</param-value>
     </context-param>
 
     <listener>
