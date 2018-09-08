@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://api.ws.sdm.sebastian.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="WSDocService" targetNamespace="http://api.ws.sdm.sebastian.cl/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://api.ws.sdm.sebastian.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://api.ws.sdm.sebastian.cl/">
+  <xs:element name="documentVO" type="tns:documentVO"/>
+  <xs:element name="download" type="tns:download"/>
+  <xs:element name="downloadResponse" type="tns:downloadResponse"/>
+  <xs:element name="responseVO" type="tns:responseVO"/>
+  <xs:element name="typeVO" type="tns:typeVO"/>
+  <xs:element name="upload" type="tns:upload"/>
+  <xs:element name="uploadResponse" type="tns:uploadResponse"/>
+  <xs:complexType name="download">
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="downloadResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:documentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="documentVO">
+    <xs:complexContent>
+      <xs:extension base="tns:baseBean">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string"/>
+          <xs:element minOccurs="0" name="data" type="xs:string"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="type" type="tns:typeVO"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="baseBean">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="typeVO">
+    <xs:complexContent>
+      <xs:extension base="tns:baseBean">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" type="xs:string"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="upload">
+    <xs:sequence>
+      <xs:element name="type" type="xs:string"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="base64data" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="uploadResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:responseVO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseVO">
+    <xs:complexContent>
+      <xs:extension base="tns:baseBean">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string"/>
+          <xs:element minOccurs="0" name="description" type="xs:string"/>
+          <xs:element name="ok" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SdmException" type="tns:SdmException"/>
+  <xs:complexType name="SdmException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="uploadResponse">
+    <wsdl:part element="tns:uploadResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="download">
+    <wsdl:part element="tns:download" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="downloadResponse">
+    <wsdl:part element="tns:downloadResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SdmException">
+    <wsdl:part element="tns:SdmException" name="SdmException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="upload">
+    <wsdl:part element="tns:upload" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="WSDoc">
+    <wsdl:operation name="download">
+      <wsdl:input message="tns:download" name="download">
+    </wsdl:input>
+      <wsdl:output message="tns:downloadResponse" name="downloadResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:SdmException" name="SdmException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="upload">
+      <wsdl:input message="tns:upload" name="upload">
+    </wsdl:input>
+      <wsdl:output message="tns:uploadResponse" name="uploadResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSDocServiceSoapBinding" type="tns:WSDoc">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="download">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="download">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="downloadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdmException">
+        <soap:fault name="SdmException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="upload">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="upload">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="uploadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSDocService">
+    <wsdl:port binding="tns:WSDocServiceSoapBinding" name="WSDocPort">
+      <soap:address location="https://api.sebastian.cl/sdm-ws/WSDoc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
