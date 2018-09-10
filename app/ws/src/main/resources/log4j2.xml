@@ -7,7 +7,7 @@
     <Appenders>
         <!-- Archivo principal -->
         <RollingFile name="ROOT_REST_EE" 
-                     fileName="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}escritorioempresa.log" 
+                     fileName="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}sdm.log" 
                      filePattern="${sys:path.logs}${sys:file.separator}sdm${sys:file.separator}ws${sys:file.separator}sdm.log.%d{yyyyMMdd}.gz" 
                      append="true">
             <ThresholdFilter level="DEBUG" />
@@ -70,7 +70,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="cl.sdm" additivity="false">
+        <Logger name="cl.sebastian" additivity="false">
             <AppenderRef ref="INFO_REST_EE" level="info" />
             <AppenderRef ref="ERROR_REST_EE" level="error" />
             <AppenderRef ref="DEBUG_REST_EE" level="debug" />

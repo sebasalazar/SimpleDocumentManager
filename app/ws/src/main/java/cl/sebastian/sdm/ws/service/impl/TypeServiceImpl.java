@@ -25,8 +25,8 @@ public class TypeServiceImpl implements TypeService, Serializable {
     public ResponseVO create(final String name, final String description) {
         ResponseVO vo = null;
         try {
-            if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(description)) {
-                Type type = typeManager.create(name, description);
+            if (StringUtils.isNotBlank(name)) {
+                Type type = typeManager.create(StringUtils.trimToEmpty(name), StringUtils.trimToEmpty(description));
                 vo = new ResponseVO();
                 if (type != null) {
                     vo.setCode(UUID.randomUUID().toString());

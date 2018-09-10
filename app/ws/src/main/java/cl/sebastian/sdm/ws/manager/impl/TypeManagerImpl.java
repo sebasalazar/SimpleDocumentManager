@@ -70,7 +70,7 @@ public class TypeManagerImpl implements TypeManager, Serializable {
     @Transactional
     public Type create(final String name, final String description) {
         Type type = null;
-        if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(description)) {
+        if (StringUtils.isNotBlank(name)) {
             Type result = typeRepository.findByNameIgnoreCase(name);
             if (result == null) {
                 result = new Type();
